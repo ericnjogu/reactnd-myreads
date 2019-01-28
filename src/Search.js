@@ -38,7 +38,8 @@ class Search extends Component {
             <div><input type='text' value={this.state.query} onChange={this.runQuery}/></div>
             <div>
                 {
-                    this.state.books.length > 0 ? this.state.books.map(book => <Book key={book.id} book={book}/>) : <div></div>
+                    this.state.books.length > 0 ? this.state.books.map(
+                        book => <Book key={book.id} book={book} shelves={this.props.shelves} bookShelfChanged={this.props.bookShelfChanged}/>) : <div></div>
                 }
             </div>
         </div>

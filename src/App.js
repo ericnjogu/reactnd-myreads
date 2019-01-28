@@ -11,6 +11,15 @@ class App extends Component {
     books:[],
     shelves:{wantToRead:"Want To Read", currentlyReading: 'Currently Reading', read:'Read'}
   }
+
+  bookShelfChanged = (event, book) => {
+      BooksAPI.update(book, event.target.value).then(
+          () => {
+              this.fetchBookShelves();
+          }
+      )
+  }
+
   render() {
     return (
       <div className="App">
@@ -24,12 +33,15 @@ class App extends Component {
                             <div>
 
                                 <h3 style={{clear:'left'}}>{this.state.shelves[key]}</h3>
-                                {this.state.books.filter(book => book.shelf === key).map(book => <Book key={book.id} book={book}/>)}
+                                {this.state.books.filter(book => book.shelf === key).map(
+                                    book => <Book key={book.id} book={book} shelves={this.state.shelves} bookShelfChanged={this.bookShelfChanged}/>)}
                             </div>
                     )}
                 </div>
             }}/>
-            <Route path="/search" component={Search}/>
+            <Route path="/search" render={() => {
+                return <Search shelves={this.state.shelves} bookShelfChanged={this.bookShelfChanged}/>
+            }}/>
 
         </div>
       </div>
@@ -37,14 +49,19 @@ class App extends Component {
   }
 
   componentDidMount () {
-    BooksAPI.getAll().then (
-        (book) => {
-          this.setState((oldState) => ({
-            books: oldState.books.concat(book)
-          }))
-        }
-    )
+    this.fetchBookShelves();
   }
+
+  fetchBookShelves() {
+        BooksAPI.getAll().then(
+            (books) => {
+                this.setState({
+                        books: books
+                    }
+                )
+            }
+        )
+    }
 }
 
 export default App;
