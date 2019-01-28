@@ -51,7 +51,7 @@ class App extends Component {
                 </div>
             }}/>
             <Route path="/search" render={() => {
-                return <Search shelves={this.state.shelves} bookShelfChanged={this.bookShelfChanged}/>
+                return <Search shelves={this.state.shelves} bookShelfChanged={this.bookShelfChanged} shelvedBooks={this.state.books}/>
             }}/>
 
         </div>

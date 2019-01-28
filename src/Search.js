@@ -6,14 +6,14 @@ import {Link} from "react-router-dom";
 class Search extends Component {
     state = {
         query:'',
-        books:[]
+        queriedBooks:[]
     }
 
     runQuery = (e) => {
         const val = e.target.value
         this.setState({
             query:val,
-            books:[],
+            queriedBooks:[],
         }, () => {
                 if (val.trim() !== '') {
 
@@ -22,7 +22,10 @@ class Search extends Component {
                             // could update the book shelve here based on info from the home page - maybe a stripped down map of
                             // book id to shelve numbers
                             this.setState({
-                                books: books
+                                queriedBooks: books.map(fetchedBook => {
+                                    let matches = this.props.shelvedBooks.filter(shelvedBook => shelvedBook.id === fetchedBook.id)
+                                    return matches.length > 0 ? matches[0] : fetchedBook
+                                })
                             })
                         }
                     )
@@ -38,7 +41,7 @@ class Search extends Component {
             <div><input type='text' value={this.state.query} onChange={this.runQuery}/></div>
             <div>
                 {
-                    this.state.books.length > 0 ? this.state.books.map(
+                    this.state.queriedBooks.length > 0 ? this.state.queriedBooks.map(
                         book => <Book key={book.id} book={book} shelves={this.props.shelves} bookShelfChanged={this.props.bookShelfChanged}/>) : <div></div>
                 }
             </div>
