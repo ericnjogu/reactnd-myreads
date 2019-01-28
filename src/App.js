@@ -13,9 +13,20 @@ class App extends Component {
   }
 
   bookShelfChanged = (event, book) => {
-      BooksAPI.update(book, event.target.value).then(
+      const newShelfId = event.target.value
+      const oldShelfId = book.shelf
+      BooksAPI.update(book, newShelfId).then(
           () => {
-              this.fetchBookShelves();
+              if (typeof oldShelfId === "undefined" || oldShelfId === 0) {
+                  book.shelf = newShelfId
+                  this.setState((oldState) => ({books:oldState.books.concat(book)}))
+              } else {
+                  this.setState((oldState) => ({books:oldState.books.map((bookToUpdate) => {
+                      if (bookToUpdate.id === book.id) {bookToUpdate.shelf = newShelfId}
+                      return bookToUpdate
+                      })}))
+              }
+              //this.fetchBookShelves();
           }
       )
   }

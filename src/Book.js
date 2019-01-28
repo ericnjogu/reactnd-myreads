@@ -8,7 +8,7 @@ function Book(props) {
         <p>
             <label>
                 Move to...
-            <select value={typeof props.book.shelf === 'undefined' ? '' : props.book.shelf} onChange={(event) => props.bookShelfChanged(event, {id:props.book.id})}>
+            <select value={typeof props.book.shelf === 'undefined' ? '' : props.book.shelf} onChange={(event) => props.bookShelfChanged(event, props.book)}>
                 {Object.keys(props.shelves).map(
                     (key) =>
                         <option value={key}>{props.shelves[key]}</option>
