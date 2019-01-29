@@ -21,12 +21,14 @@ class Search extends Component {
                         (books) => {
                             // could update the book shelve here based on info from the home page - maybe a stripped down map of
                             // book id to shelve numbers
-                            this.setState({
-                                queriedBooks: books.map(fetchedBook => {
-                                    let matches = this.props.shelvedBooks.filter(shelvedBook => shelvedBook.id === fetchedBook.id)
-                                    return matches.length > 0 ? matches[0] : fetchedBook
+                            if (books.length > 0) {
+                                this.setState({
+                                    queriedBooks: books.map(fetchedBook => {
+                                        let matches = this.props.shelvedBooks.filter(shelvedBook => shelvedBook.id === fetchedBook.id)
+                                        return matches.length > 0 ? matches[0] : fetchedBook
+                                    })
                                 })
-                            })
+                            }
                         }
                     )
                 }
