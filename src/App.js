@@ -41,7 +41,7 @@ class App extends Component {
                 <div><Link to='/search'>Search</Link></div>
                     {Object.keys(this.state.shelves).map(
                     (key) =>
-                            <div>
+                            <div key={key}>
 
                                 <h3 style={{clear:'left'}}>{this.state.shelves[key]}</h3>
                                 {this.state.books.filter(book => book.shelf === key).map(

@@ -11,9 +11,9 @@ function Book(props) {
             <select value={typeof props.book.shelf === 'undefined' ? '' : props.book.shelf} onChange={(event) => props.bookShelfChanged(event, props.book)}>
                 {Object.keys(props.shelves).map(
                     (key) =>
-                        <option value={key}>{props.shelves[key]}</option>
+                        <option key={key} value={key}>{props.shelves[key]}</option>
                 )}
-                <option value=''>None</option>
+                <option key='none' value=''>None</option>
             </select>
             </label>
         </p>
